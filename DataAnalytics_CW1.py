@@ -1,25 +1,46 @@
+import csv
+from datetime import datetime
+
 class RainfallRecord:
-    def __init__(self, year, month, temp_min, temp_max, average_fall, rainfall_value, sun_hours):
+    def __init__(self, city, year, rainfall_values):
+        self.city = city
         self.year = year
-        self.month = month
-        self.temp_min = temp_min
-        self.temp_max = temp_max
-        self.average_fall = average_fall
-        self.rainfall_value = rainfall_value
-        self.sun_hours = sun_hours
-   
+        self.rainfall_values = rainfall_values
+
+        # Validate inputs
+        self.validate_inputs()
+
+    def validate_inputs(self):
+        current_year = datetime.now().year
+
+        if not isinstance(self.city, str) or not self.city:
+            raise ValueError("City must be a non-empty string")
+
+        if not isinstance(self.year, int) or self.year < 1900 or self.year > current_year:
+            raise ValueError(f"Invalid year. Must be between 1900 and {current_year}")
+
+        if not isinstance(self.rainfall_values, list) or len(self.rainfall_values) != 12:
+            raise ValueError("Rainfall values must be a list of 12 numbers")
+
+        for value in self.rainfall_values:
+            if not isinstance(value, (int, float)):
+                raise ValueError("Rainfall values must be numbers")
 
 class Driver:
     def __init__(self):
         self.records = []
 
     def read_csv(self, filename):
-            with open(filename) as f:            
-                self.records = []
-                for line in f:
-                    self.records.append(RainfallRecord(*line.replace('\n', "").split(",")))
-        
-    def getRainfallRecords(self):
+        with open(filename, newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                city = row['City']
+                year = int(row['Year'])
+                rainfall_values = [float(row[str(i)]) for i in range(1, 13)]
+                record = RainfallRecord(city, year, rainfall_values)
+                self.records.append(record)
+
+    def get_rainfall_records(self):
         return self.records
 
 def return_driver(file_name):
