@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Python program manages and analyzes rainfall records for different cities. It consists of several classes and functions designed to handle operations such as viewing, editing, deleting, and adding rainfall records. The main features include:
+This Python program manages and analyses rainfall records for different cities. It consists of several classes and functions designed to handle operations such as viewing, editing, deleting, and adding rainfall records. The main features include:
 
 - **Classes:**
   - `RainfallRecord`: Represents a single record of rainfall information, including sun hours, average rainfall, value, minimum and maximum temperatures, and year.
