@@ -1,4 +1,3 @@
-
 class RainfallRecord:
     def __init__(self, year, month, temp_min, temp_max, average_fall, rainfall_value, sun_hours):
         self.year = year
